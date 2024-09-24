@@ -3,22 +3,21 @@ module.exports = {
     node: true,
     es2021: true,
   },
-  extends: ['eslint:recommended', 'airbnb-base', 'plugin:prettier/recommended'],
+  extends: ["eslint:recommended", "airbnb-base", "plugin:prettier/recommended"],
   parserOptions: {
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: "module",
   },
   rules: {
-    'no-console': 'off',
-    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-    'consistent-return': 'off',
-    'no-param-reassign': 'off',
+    "no-console": "off",
+    "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    "consistent-return": "off",
+    "no-param-reassign": "off",
   },
   prettier: {
-    semi: false,
     singleQuote: true,
-    trailingComma: 'es5',
+    trailingComma: "es5",
     printWidth: 80,
     tabWidth: 2,
   },
-}
+};

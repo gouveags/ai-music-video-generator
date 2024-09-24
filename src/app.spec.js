@@ -1,24 +1,45 @@
-const express = require('express')
-const request = require('supertest')
-const chai = require('chai')
-const expect = chai.expect
+// const request = require("supertest");
+const { LyricsCompletion } = require("./openai");
 
-const app = express()
+// // Use dynamic import to load ES modules
+// let chai;
+// (async () => {
+//   chai = await import("chai");
+//   const { expect } = chai;
 
-app.get('/hello', (req, res) => {
-  res.send('Hello, World!')
-})
+//   const app = require("./app"); // Adjust the path if necessary
 
-describe('GET /hello', function () {
-  it('should return Hello, World!', function (done) {
-    request(app)
-      .get('/hello')
-      .expect('Content-Type', /text/)
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err)
-        expect(res.text).to.equal('Hello, World!')
-        done()
-      })
-  })
-})
+//   describe("POST /api", () => {
+//     it('should respond with "hello world"', (done) => {
+//       request(app)
+//         .post("/api")
+//         .send({ key: "value" })
+//         .expect(200)
+//         .expect("Content-Type", /text\/plain/)
+//         .end((err, res) => {
+//           if (err) return done(err);
+//           expect(res.text).to.equal("hello world");
+//           done();
+//         });
+//     });
+//   });
+// })();
+
+describe.only("OpenAI Integration Test", () => {
+  it("should return a completion from OpenAI", async () => {
+    const response = await LyricsCompletion({
+      theme: "Natal",
+      genre: "Música infantil",
+      context:
+        "Música animada e muito divertida para crianças aprenderem e se divertirem",
+      language: "português do brasil",
+    });
+
+    // // Assert that the response contains a message
+    // expect(response).toHaveProperty("message");
+    // expect(response.message).toHaveProperty("role", "assistant");
+    // expect(response.message).toHaveProperty("content");
+
+    console.log(response); // Optional: log the output to the console
+  });
+});
