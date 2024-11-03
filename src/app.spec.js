@@ -1,21 +1,27 @@
-const { LyricsCompletion } = require("./openai");
+require("dotenv").config();
 const { main } = require("./suno");
+const openaiModule = require("./openai");
 
-xdescribe("OpenAI Integration Test", () => {
-  it("should return a completion from OpenAI", async () => {
-    const response = await LyricsCompletion({
-      theme: "Natal",
-      genre: "Música infantil",
-      context:
-        "Música animada e muito divertida para crianças aprenderem e se divertirem",
-      language: "português do brasil",
+const openai = openaiModule({apiKey: process.env.OPENAI_API_KEY})
+
+describe("OpenAI Integration Test", () => {
+  describe("Lyrics Generation", () => {
+    it.only("should return a completion from OpenAI", async () => {
+      const response = await openai.lyricsGeneration({
+        theme: "Natal",
+        genre: "Música infantil",
+        context:
+          "Música animada e muito divertida para crianças aprenderem e se divertirem",
+        language: "português do brasil",
+      });
+  
+      console.log(response); // Optional: log the output to the console
     });
-
-    console.log(response); // Optional: log the output to the console
   });
+  
 });
 
-describe.only("Suno Integration Test", () => {
+xdescribe("Suno Integration Test", () => {
   it("should return a song from Suno", async () => {
     await main();
   });
