@@ -1,56 +1,30 @@
-# compiled output
-/dist
-/node_modules
-/build
+# dependencies
+node_modules
+**/node_modules
 
-# Logs
-logs
-*.log
-npm-debug.log*
-pnpm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
+# build artifacts
+apps/frontend/.astro
+apps/frontend/dist
+apps/backend/coverage
+apps/backend/tmp
+apps/backend/storage
 
-# OS
-.DS_Store
+# local infrastructure state
+infra/suno-api
+infra/minio/data
+infra/postgres/data
 
-# Tests
-/coverage
-/.nyc_output
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
-# dotenv environment variable files
+# env
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+.env.*
+!.env.example
 
-# temp directory
+# logs and temp
+*.log
+logs
+.DS_Store
 .temp
 .tmp
 
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Diagnostic reports (https://nodejs.org/api/report.html)
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+# misc
+coverage

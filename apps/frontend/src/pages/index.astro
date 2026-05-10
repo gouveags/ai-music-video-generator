@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="AI Music Video Studio">
+  <div class="grain" aria-hidden="true"></div>
+  <header class="hero-wrap">
+    <p class="eyebrow">AI Music Video Generator</p>
+    <h1>Direct your video like a magazine editor, generate it like a studio pipeline.</h1>
+    <p class="hero-subtitle">
+      Submit a creative brief, track each production stage in real time, and download the finished
+      video when the queue completes.
+    </p>
+  </header>
+
+  <main id="main" class="dashboard-grid">
+    <section class="panel panel-form" aria-labelledby="brief-title">
+      <div class="panel-head">
+        <h2 id="brief-title">Creative Brief</h2>
+        <p>
+          Define tone, style, and concept. The backend handles queueing, generation, and rendering.
+        </p>
+      </div>
+
+      <form id="generation-form" class="brief-form">
+        <label>
+          Mood
+          <input name="mood" value="dreamy" required minlength="2" maxlength="120" />
+        </label>
+
+        <label>
+          Genre
+          <input name="genre" value="indie pop" required minlength="2" maxlength="120" />
+        </label>
+
+        <label>
+          Topic
+          <textarea name="topic" required minlength="2" maxlength="240"
+            >A city waking up before sunrise</textarea
+          >
+        </label>
+
+        <div class="split">
+          <label>
+            Language
+            <input name="language" value="english" required minlength="2" maxlength="80" />
+          </label>
+
+          <label>
+            Style
+            <input
+              name="style"
+              value="editorial cinematic"
+              required
+              minlength="2"
+              maxlength="120"
+            />
+          </label>
+        </div>
+
+        <label>
+          Duration (seconds)
+          <input type="number" name="durationSeconds" value="90" min="30" max="240" />
+        </label>
+
+        <button id="submit-button" type="submit">Generate Video</button>
+      </form>
+    </section>
+
+    <section class="panel panel-status" aria-labelledby="status-title">
+      <div class="panel-head status-head">
+        <h2 id="status-title">Pipeline Status</h2>
+        <span id="status-pill" class="status-pill queued">idle</span>
+      </div>
+
+      <p id="job-id" class="job-id">No active job</p>
+
+      <div class="progress-wrap" aria-live="polite">
+        <div class="progress-label-row">
+          <span id="stage-label">Waiting for submission</span>
+          <span id="progress-value">0%</span>
+        </div>
+        <div
+          class="progress-track"
+          role="progressbar"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="events-box" aria-live="polite">
+        <h3>Event timeline</h3>
+        <ul id="events-list"></ul>
+      </div>
+    </section>
+
+    <section class="panel panel-artifacts" aria-labelledby="artifacts-title">
+      <div class="panel-head">
+        <h2 id="artifacts-title">Artifacts</h2>
+        <p>Generated outputs appear here when the job reaches completion.</p>
+      </div>
+      <div id="artifacts-grid" class="artifacts-grid"></div>
+    </section>
+  </main>
+
+  <template id="artifact-template">
+    <article class="artifact-card">
+      <h3 class="artifact-title"></h3>
+      <p class="artifact-meta"></p>
+      <div class="artifact-preview"></div>
+      <a class="artifact-link" target="_blank" rel="noreferrer noopener">Open artifact</a>
+    </article>
+  </template>
+
+  <script type="module">
+    import '../scripts/dashboard.js';
+  </script>
+</BaseLayout>

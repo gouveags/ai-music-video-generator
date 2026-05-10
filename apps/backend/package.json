@@ -1,0 +1,32 @@
+{
+  "name": "@amvg/backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "start:worker": "node src/worker.js",
+    "lint": "eslint \"src/**/*.js\" \"test/**/*.js\"",
+    "lint:fix": "eslint \"src/**/*.js\" \"test/**/*.js\" --fix",
+    "test": "mocha \"test/**/*.spec.js\" --timeout 20000"
+  },
+  "dependencies": {
+    "axios": "^1.9.0",
+    "bullmq": "^5.50.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "ioredis": "^5.6.1",
+    "minio": "^8.0.6",
+    "openai": "^4.104.0",
+    "pg": "^8.16.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "eslint": "^8.57.1",
+    "mocha": "^11.2.2",
+    "supertest": "^7.1.1"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "@amvg/frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0 --port 4321",
+    "build": "astro build",
+    "preview": "astro preview --host 0.0.0.0 --port 4321",
+    "lint": "eslint \"src/**/*.js\"",
+    "lint:fix": "eslint \"src/**/*.js\" --fix",
+    "test": "npm run build"
+  },
+  "devDependencies": {
+    "astro": "^5.13.5",
+    "eslint": "^8.57.1"
+  }
+}

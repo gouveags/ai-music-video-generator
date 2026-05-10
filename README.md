@@ -1,79 +1,84 @@
-# AI Music Video Generator
+# AI Music Video Generator Platform
 
-**AI Music Video Generator** automates the creation of music videos by leveraging AI to generate song lyrics, images, music, and video content. It integrates OpenAI for lyric generation, DALL-E for image creation, Suno for music production, and FFmpeg for video processing. The tool simplifies video creation and automates uploading to platforms like YouTube and TikTok.
+Containerized local platform to generate AI music videos end-to-end with:
 
-## Features
+- Astro frontend dashboard
+- Express API + BullMQ worker backend
+- Postgres metadata store
+- Redis queue broker
+- MinIO object storage
+- Suno API for music generation
+- FFmpeg video composition in backend container
 
-- **AI-Powered Lyric Generation**: Generate unique song lyrics based on user-specified themes, genres, and languages using OpenAI.
-- **AI Image Generation**: Use DALL-E to create custom visuals that match the song lyrics and theme.
-- **AI Music Generation**: Produce original music tracks tailored to the generated lyrics with Suno.AI.
-- **Automated Video Creation**: Seamlessly combine generated lyrics, images, and music into a cohesive video using FFmpeg.
-- **Platform Integration**: Automatically upload the generated music videos to platforms such as YouTube and TikTok.
+## Monorepo structure
 
-## Getting Started
+- `apps/frontend`: Astro dashboard (no auth, single-user local UX)
+- `apps/backend`: Express API + worker pipeline
+- `docs`: architecture, ADRs, runbooks
+- `scripts`: automation scripts (Suno bootstrap, curl endpoint checks)
 
-### Prerequisites
+## Quick start
 
-Before you begin, ensure you have the following installed:
-
-- [Node.js](https://nodejs.org/) (version 14.x or later)
-- OpenAI API key
-- [Suno.AI](https://suno.com/) account with valid credentials (cookies may be required)
-- [FFmpeg](https://ffmpeg.org/)
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/gouveags/ai-music-video-generator.git
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd ai-music-video-generator
-   ```
-
-3. Install the required dependencies:
-
-   ```bash
-   npm install
-   ```
-
-4. Set up environment variables:
-   Create a `.env` file in the root directory and add your API keys and necessary settings:
-   ```bash
-   OPENAI_API_KEY="your-openai-api-key"
-   SUNO_COOKIES="your-suno-cookies"
-   ```
-
-### Running the Application
-
-To start the development server, run:
+1. Create env file:
 
 ```bash
-npm run start:dev
+cp .env.example .env
 ```
 
-This will start the server in development mode. The app will listen for user input to generate lyrics, images, music, and videos.
+2. Fill required secrets in `.env`:
 
-### Testing
+- `OPENAI_API_KEY` (optional, fallback exists for lyrics/image)
+- `SUNO_COOKIE` and any required suno-api env keys
 
-To run the automated tests for the project, use the following command:
+3. Install dependencies:
 
 ```bash
-npm run test
+npm install
 ```
 
-This will execute all unit and integration tests.
+4. Clone Suno fork into infrastructure folder:
 
-## Contributing
+```bash
+npm run bootstrap:suno
+```
 
-We welcome contributions from the community! If you'd like to contribute, feel free to:
+5. Run full local stack:
 
-- Fork the repository
-- Create a new branch for your feature or bugfix
-- Submit a pull request (PR)
+```bash
+npm run up
+```
 
-Please ensure your PR is well-documented and passes all tests.
+6. Open app:
+
+- Frontend: `http://localhost:4321`
+- API: `http://localhost:8080/api/v1`
+
+## Main commands
+
+- `npm run up`: start all containers
+- `npm run down`: stop all containers
+- `npm run logs`: tail container logs
+- `npm run format`: run prettier write
+- `npm run lint`: run eslint across workspaces
+- `npm run test`: run workspace tests
+- `npm run test:api:curls`: backend endpoint smoke/e2e flow via curl
+- `npm run check`: format-check + lint + tests
+
+## API endpoints
+
+- `GET /api/v1/health`
+- `POST /api/v1/jobs`
+- `GET /api/v1/jobs/:id`
+- `GET /api/v1/jobs/:id/events` (SSE)
+- `GET /api/v1/jobs/:id/artifacts`
+
+## Reliability highlights
+
+- Queue-based async pipeline with retry/backoff
+- Persistent metadata + artifact storage split
+- Stage events for observability and UI timeline
+- FFmpeg subtitle fallback mode for resilient rendering
+
+## Developer workflow requirements
+
+See [AGENTS.md](AGENTS.md) for mandatory lint/format/test and manual verification requirements.

@@ -1,0 +1,8 @@
+node_modules
+**/node_modules
+apps/frontend/.astro
+apps/frontend/dist
+apps/backend/storage
+apps/backend/tmp
+infra/suno-api
+coverage
